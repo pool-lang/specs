@@ -1,0 +1,19 @@
+= Pool
+
+== Overview
+
+Pool is a language designed to be consistent and powerful while providing the
+compiler the information it needs to perform major optimization.  The language
+is also designed to support good programming practices such as modularity and
+testing.  It also provides paths for optimization without changing API's.
+
+== Language Reference
+
+ - [[Aliases]]
+ - [[ControlStructures]]
+ - [[Functions]]
+ - [[Home]]
+ - [[Imports]]
+ - [[Operators]]
+ - [[Statements]]
+
