@@ -1,0 +1,167 @@
+= Functions
+
+== Basic
+
+A function takes a tuple of values and returns a tuple of values.  A function
+is a block bound to a name.
+
+== Declaration
+
+{{{
+	(uint16, uint16) split ( i:uint32 )
+	[[
+		return ( i >> 16, i & 0xFFFF );
+	]]
+
+	// inside a function only
+	var makeBigger = (real v)[[ v + 1.43 ]]; // return type is inferred to be real.
+}}}
+
+To the left side of the function name is the return tuple.  The name can begin
+with any alphabetic character or an underscore and contain any alphanumeric
+characters as well as underscores.  The name can be ignored if the function is
+being used (assigned to a delegate or passed to a function).  Anonymous functions
+may also omit the arguments and return tuples in which case the return types
+will be inferred and the function will take no arguments.  If there is one tuple
+present it will be assumed to be the arguments.  If an anonymous function is
+being created inside the argument list of a function the types of the arguments
+may be omitted and they will be the types that the parameter specifies in it's
+definition.
+
+A function will return the value of the last statement executed.  If you wish to
+return a value earlier you can use a return statement.  The return statement
+will return the values passed to it.
+
+=== Blocks
+
+Blocks are similar to functions, the main difference is that blocks  have the
+added advantage of having access to the scope of the enclosing function.  Also
+you cannot return from a block.  Return statements inside blocks will return
+from the enclosing function. Blocks cannot be bound to a name access able outside
+of the function they are declared in.  Therefore if ##filter## in the following
+example attempts to store the delegate passed to it, this will fail to compile.
+
+The rules for defining blocks are nearly identical to functions except you use
+##{## and ##}## instead of ##[[## and ##]]##.  Also, for anonymous blocks you
+can skip the parameter list if it takes no arguments.
+
+{{{
+	set.filter((i){ i % 2 == 0 });
+
+	immutable pivot = 8;
+	set.filter((i){ i > pivot });
+}}}
+
+=== Default Arguments
+{{{
+	(a:Collection) collectionMin ( a:Collection, min :int = 10 )
+	[[
+		a.map((i:int){ i > min ? i : min });
+	]]
+}}}
+
+Default arguments are the value that should be passed if an argument is not
+specified by the caller.  If any argument has a default value all the arguments
+to the right of it must also have a default value.  Default values may refer to
+anything that can be accessed from the location of the function declaration and
+any previous arguments.
+
+=== Named return values
+{{{
+	(r:String) createString ( in:Collection!String )
+	{
+		r = ""
+
+		in.foreach((s:String)[[
+			r += s;
+		]])
+	}
+}}}
+
+Named return values allow you to use a value inside a function and it will
+automatically be returned at the end.  The type of a named return value must be
+a class.  The value will not be initialized.  If any return value has a name all
+return values to the right of it must also have a name.  If you use a return
+statement you do not need to provide values for the named items.  If the name
+of a return value is the same as that of an argument the value will be
+initialized with the value passed in.
+
+=== Macros
+
+Pool does not have explicit macros but you can use blocks or functions as macros.
+{{{
+	unittest
+	{
+		bool isCloseF(f1:real, f2:real, tol:real = 0.001)
+		[[
+			return f1+tol > f2 && f1-tol < f2;
+		]]
+		bool isCloseB(f1:real, f2:real, tol:real = 0.001)
+		{
+			f1+tol > f2 && f1-tol < f2;
+		}
+
+		assert(isCloseF(sin(Pi*0.0, 0)));
+		assert(isCloseF(sin(Pi*0.5, 0)));
+		assert(isCloseB(sin(Pi*1.0, 0)));
+		assert(isCloseB(sin(Pi*1.5, 0)));
+	}
+}}}
+
+== Calling
+{{{
+	var i = sin(Pi/2);
+}}}
+
+Function calls are similar to most C-style languages.  It is the name of the
+function followed by a tuple of arguments.
+
+=== Syntax Sugar
+
+==== Bracket Drop Function Call Syntax
+
+The brackets may be omitted in function calls.  In this case it will be assumed
+that the brackets would be placed right after the function name and at the end
+of the statement.
+{{{
+	f1 1, f2 2, 3, 4, 5 f3 6;
+	// Is equivalent to
+	f1(1, f2(2, 3, 4, 5 f3(6)));
+}}}
+
+As it is clear to see this can quickly get confusing so it is recommended to use
+discretion and whitespace when considering this syntactic sugar.
+{{{
+	assert sin(0) == 0;
+
+	thing.enable true;
+}}}
+
+It is important to note that you must have brackets on a function that takes no
+arguments.
+
+==== Block Outside Function Call Syntax
+
+If the last argument of a function is a block or anonymous function you may
+put it outside of the brackets and the semi-colon can be omitted.  Also single
+statement blocks may be written without the braces.
+
+{{{
+	() f ( i :int, f :(int)(int){} )
+	[[
+		// ...
+	]]
+
+	f(5, (i){ i*2 });
+	// can be written as:
+	f(5)
+		(i){ i*2 }
+
+	// This is really nice when the block takes no arguments.
+	if (true, {i++});
+	// can be written as:
+	if (true) {i++}
+	// or:
+	if (true) i++;
+}}}
+

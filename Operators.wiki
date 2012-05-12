@@ -1,0 +1,25 @@
+= Operators
+
+== Precedence
+
+|= Operator         |= Description                             |= Associativity |
+| ::                | Scope resolution                         | Left-to-right |
+| ++ --             | Suffix/postfix increment and decrement   |               |
+| []                | Array subscript                       |               |
+| .                 | Element selection                        |               |
+| ++ --             | Prefix increment and decrement           | Right-to-left |
+| + -               | Unary plus and minus                     |               |
+| ! ~               | Logical NOT and bitwise NOT              |               |
+| *                 | Indirection (dereference)                |               |
+| &                 | Address-of                               |               |
+| * / %             | Multiplication, division, and remainder  |               |
+| + -               | Addition and subtraction.                |               |
+| ~<< ~>>           | Bitwise left shift and right shift       |               |
+| & ^ ~|            | Bitwise math operations.                 |               |
+| < <= > >=         | Relational operators.                    |               |
+| == !=             | For relational = and ≠ respectively      |               |
+| && ~|~|           | Logical operators.                       |               |
+| =                 | Direct assignment                        |               |
+| += −= *= /= %=
+  <<= >>= &= ^= ~|= | Assignment by sum and difference         |               |
+| ,                 | Tuple separator Left-to-right            |               |
