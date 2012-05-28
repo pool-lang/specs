@@ -1,32 +1,32 @@
-= Imports
+= Imports =
 
-== Basic
+== Basic ==
 Often you wish to group your code or use something someone else wrote.  You can
 use an import statement to access information in other files.
 
-{{{
+```
 	import {module};
-}}}
+```
 
-If module has a period (##.##) in it the double colon is converted to a path
+If module has a period (``.``) in it the double colon is converted to a path
 separator when looking for files.
 
-The file ##module.pool## is searched for in the following locations.  This is
+The file ``module.pool`` is searched for in the following locations.  This is
 first looked for relative to the current file.  If the file is not found it is
 then looked for in the include path.  The include path has an order.
 
-=== Examples
+=== Examples ===
 
 Directory Layout:
-{{{
+```
 ├── extra.pool
 ├── lib
 │   ├── advanced.pool
 │   └── core.pool
 └── main.pool
-}}}
+```
 
-{{{
+```
 	// main.pool
 
 	import extra;     // Imports extra.pool.
@@ -35,14 +35,14 @@ Directory Layout:
 	import pool::std; // Not found relative to the current file.  Therefore
 	                  // it will be looked for in the include paths,
 	                  // finding the standard library.
-}}}
+```
 
-== Renaming on import
+== Renaming on import ==
 It is common to have namespace clashes when importing a lot of modules.  To
 combat this Pool allows you to change the name of a module on import.  Consider
 the following example.
 
-{{{
+```
 	// main.pool
 
 	import containers::jar;
@@ -54,14 +54,14 @@ the following example.
 
 		jars.insert(new Jar(arg[1]));
 	}
-}}}
+```
 
-Obviously that doesn't work.  Do you want to have a ##.jar## file that has glass
-jars inside of it or a jar with smaller jars or a ##.jar## full of ##.jar##s.
+Obviously that doesn't work.  Do you want to have a ``.jar`` file that has glass
+jars inside of it or a jar with smaller jars or a ``.jar`` full of ``.jar``s.
 To make it make sense to you (and the compiler) you need to fully qualify the
 the types.
 
-{{{
+```
 	// main.pool
 
 	import containers::jar;
@@ -73,14 +73,14 @@ the types.
 
 		jars.insert(new languages::vitrualmachine::java::files::jar::Jar(arg[1]));
 	}
-}}}
+```
 
-Okay, we want a jar full of ##.jar##s.  But that is a lot to write especially if
+Okay, we want a jar full of ``.jar``s.  But that is a lot to write especially if
 we want to add more files to our jar.  How to get around this is to use Pool's
 rename on import feature.
 
 
-{{{
+```
 	// main.pool
 
 	import containers::jar;
@@ -92,10 +92,10 @@ rename on import feature.
 
 		jars.insert(new jjar::Jar(arg[1]));
 	}
-}}}
+```
 
 There we go, much shorter.  Now we can use the Java jar namespace as a shortcut.
-But why can't we alias ##languages::vitrualmachine::java::files::jar::Jar## to
+But why can't we alias ``languages::vitrualmachine::java::files::jar::Jar`` to
 JJar and be done with it.  Well, you can, but that is done via an alias, giving
 one type a new name.  The module renaming is powerful because now all of the
-functions for dealing with ##.jar## files are available under a short name.
+functions for dealing with ``.jar`` files are available under a short name.

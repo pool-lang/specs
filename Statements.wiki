@@ -1,10 +1,10 @@
-= Statements
+= Statements =
 
-== Overview
+== Overview ==
 A statement does something.  Statements are terminated by a semi-colon and and
 empty statement is valid.  Here are some examples of statements.
 
-{{{
+```
 	mutable i = 10;                 // This is a statement.
 	i = 4;                          // This too.
 	;                               // Also a statement.
@@ -13,25 +13,25 @@ empty statement is valid.  Here are some examples of statements.
 	i =       // Part of a statement.
 	    4 + 5 // More of it.
 	   ;      // The end of it.
-}}}
+```
 
 You should have noticed that lines have noting to do with statements.
 
-== Blocks.
+== Blocks. ==
 As well as semi-colon terminated statements we also have compound statements
 called blocks.  Blocks consist of any number of statements inside of braces.
 
-{{{
+```
 	{ // This is one statement.
 		mutable i;   // It does the statements inside of it.
 		i = 5;
 		i += 10; // And returns the value of the last statement inside of it.
 	}
-}}}
+```
 
 They are very useful for if statements.
 
-{{{
+```
 	// mutable i:int
 
 	mutable bt3;
@@ -45,13 +45,13 @@ They are very useful for if statements.
 		stdout.writeln("i is smaller than three :(");
 		bt3 = false;
 	}
-}}}
+```
 
 The value of a block is the value of the last statement executed.  All exit
 paths from a block must provide a value that can be stored inside the location
 it is being sent to.
 
-{{{
+```
 	mutable s = {
 		mutable h = "1234567890"
 		h = sha256(s);
@@ -81,4 +81,4 @@ it is being sent to.
 		else if  (float) 5.0;
 		else             null;
 	} // All will be cast to Object.  Possible compiler warning.
-}}}
+```

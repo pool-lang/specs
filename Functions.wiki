@@ -1,13 +1,13 @@
-= Functions
+= Functions =
 
-== Basic
+== Basic ==
 
 A function takes a tuple of values and returns a tuple of values.  A function
 is a block bound to a name.
 
-== Declaration
+== Declaration ==
 
-{{{
+```
 	(uint16, uint16) split ( i:uint32 )
 	[[
 		return ( i >> 16, i & 0xFFFF );
@@ -15,7 +15,7 @@ is a block bound to a name.
 
 	// inside a function only
 	var makeBigger = (real v)[[ v + 1.43 ]]; // return type is inferred to be real.
-}}}
+```
 
 To the left side of the function name is the return tuple.  The name can begin
 with any alphabetic character or an underscore and contain any alphanumeric
@@ -32,33 +32,33 @@ A function will return the value of the last statement executed.  If you wish to
 return a value earlier you can use a return statement.  The return statement
 will return the values passed to it.
 
-=== Blocks
+=== Blocks ===
 
 Blocks are similar to functions, the main difference is that blocks  have the
 added advantage of having access to the scope of the enclosing function.  Also
 you cannot return from a block.  Return statements inside blocks will return
 from the enclosing function. Blocks cannot be bound to a name access able outside
-of the function they are declared in.  Therefore if ##filter## in the following
+of the function they are declared in.  Therefore if ``filter`` in the following
 example attempts to store the delegate passed to it, this will fail to compile.
 
 The rules for defining blocks are nearly identical to functions except you use
-##{## and ##}## instead of ##[[## and ##]]##.  Also, for anonymous blocks you
+``{`` and ``}`` instead of ``[[`` and ``]]``.  Also, for anonymous blocks you
 can skip the parameter list if it takes no arguments.
 
-{{{
+```
 	set.filter((i){ i % 2 == 0 });
 
 	immutable pivot = 8;
 	set.filter((i){ i > pivot });
-}}}
+```
 
-=== Default Arguments
-{{{
+=== Default Arguments ===
+```
 	(a:Collection) collectionMin ( a:Collection, min :int = 10 )
 	[[
 		a.map((i:int){ i > min ? i : min });
 	]]
-}}}
+```
 
 Default arguments are the value that should be passed if an argument is not
 specified by the caller.  If any argument has a default value all the arguments
@@ -66,8 +66,8 @@ to the right of it must also have a default value.  Default values may refer to
 anything that can be accessed from the location of the function declaration and
 any previous arguments.
 
-=== Named return values
-{{{
+=== Named return values ===
+```
 	(r:String) createString ( in:Collection!String )
 	{
 		r = ""
@@ -76,7 +76,7 @@ any previous arguments.
 			r += s;
 		]])
 	}
-}}}
+```
 
 Named return values allow you to use a value inside a function and it will
 automatically be returned at the end.  The type of a named return value must be
@@ -86,10 +86,10 @@ statement you do not need to provide values for the named items.  If the name
 of a return value is the same as that of an argument the value will be
 initialized with the value passed in.
 
-=== Macros
+=== Macros ===
 
 Pool does not have explicit macros but you can use blocks or functions as macros.
-{{{
+```
 	unittest
 	{
 		bool isCloseF(f1:real, f2:real, tol:real = 0.001)
@@ -106,47 +106,47 @@ Pool does not have explicit macros but you can use blocks or functions as macros
 		assert(isCloseB(sin(Pi*1.0, 0)));
 		assert(isCloseB(sin(Pi*1.5, 0)));
 	}
-}}}
+```
 
-== Calling
-{{{
+== Calling ==
+```
 	var i = sin(Pi/2);
-}}}
+```
 
 Function calls are similar to most C-style languages.  It is the name of the
 function followed by a tuple of arguments.
 
-=== Syntax Sugar
+=== Syntax Sugar ===
 
-==== Bracket Drop Function Call Syntax
+==== Bracket Drop Function Call Syntax ====
 
 The brackets may be omitted in function calls.  In this case it will be assumed
 that the brackets would be placed right after the function name and at the end
 of the statement.
-{{{
+```
 	f1 1, f2 2, 3, 4, 5 f3 6;
 	// Is equivalent to
 	f1(1, f2(2, 3, 4, 5 f3(6)));
-}}}
+```
 
 As it is clear to see this can quickly get confusing so it is recommended to use
 discretion and whitespace when considering this syntactic sugar.
-{{{
+```
 	assert sin(0) == 0;
 
 	thing.enable true;
-}}}
+```
 
 It is important to note that you must have brackets on a function that takes no
 arguments.
 
-==== Block Outside Function Call Syntax
+==== Block Outside Function Call Syntax ====
 
 If the last argument of a function is a block or anonymous function you may
 put it outside of the brackets and the semi-colon can be omitted.  Also single
 statement blocks may be written without the braces.
 
-{{{
+```
 	() f ( i :int, f :(int)(int){} )
 	[[
 		// ...
@@ -163,5 +163,5 @@ statement blocks may be written without the braces.
 	if (true) {i++}
 	// or:
 	if (true) i++;
-}}}
+```
 

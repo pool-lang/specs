@@ -1,6 +1,6 @@
-= Operators
+= Operators =
 
-== Precedence
+== Precedence ==
 
 |= Operator         |= Description                             |= Associativity |
 | ::                | Scope resolution                         | Left-to-right |
