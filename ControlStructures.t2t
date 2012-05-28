@@ -1,8 +1,11 @@
-= Control Structures =
+Control Structures
+
+
+%!includeconf: config.t2t
 
 == if ==
 
-```
+``` T core.if!(T)( cond:bool, ifTrue:block(T)(), ifFalse:block(T)() = noop )
 
 An if statement takes a condition and executes the first block if it is true
 otherwise the other ( if provided ).  The value of the executed block is
@@ -53,7 +56,7 @@ statements.
 
 == while ==
 
-```
+``` () while!(T)( block(bool)() cond, block(uint)() code )
 
 The while statement performs the following steps.
 
@@ -72,14 +75,14 @@ The while statement performs the following steps.
 
 === dowhile ===
 
-```
+``` () dowhile!(T)( block(bool)() cond, block(uint)() code )
 
 The same as while except it doesn't evaluate the condition on the first pass.
 (start at step 2)
 
 == for ==
 
-```
+``` () for!(T)( block()() init, block(bool)() cond, block()() inc, block(uint)() code )
 
 The for loop performs the following steps.
 

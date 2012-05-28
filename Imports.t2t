@@ -1,4 +1,7 @@
-= Imports =
+Imports
+
+
+%!includeconf: config.t2t
 
 == Basic ==
 Often you wish to group your code or use something someone else wrote.  You can

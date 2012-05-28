@@ -1,11 +1,14 @@
-= Operators =
+Operators
+
+
+%!includeconf: config.t2t
 
 == Precedence ==
 
-|= Operator         |= Description                             |= Associativity |
+|| Operator         || Description                             || Associativity |
 | ::                | Scope resolution                         | Left-to-right |
 | ++ --             | Suffix/postfix increment and decrement   |               |
-| []                | Array subscript                       |               |
+| []                | Array subscript                          |               |
 | .                 | Element selection                        |               |
 | ++ --             | Prefix increment and decrement           | Right-to-left |
 | + -               | Unary plus and minus                     |               |
@@ -20,6 +23,5 @@
 | == !=             | For relational = and ≠ respectively      |               |
 | && ~|~|           | Logical operators.                       |               |
 | =                 | Direct assignment                        |               |
-| += −= *= /= %=
-  <<= >>= &= ^= ~|= | Assignment by sum and difference         |               |
+| += −= *= /= %= <<= >>= &= ^= ~|= | Assignment by sum and difference |        |
 | ,                 | Tuple separator Left-to-right            |               |
