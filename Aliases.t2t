@@ -1,4 +1,8 @@
-= Aliases =
+Aliases
+
+
+%!target: html
+%!include: config.t2t
 
 == Basic Usage ==
 An alias is used to give a symbol a new name.  The two names can be used

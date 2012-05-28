@@ -1,4 +1,6 @@
-= Statements =
+Statements
+
+%!include config.t2t
 
 == Overview ==
 A statement does something.  Statements are terminated by a semi-colon and and
