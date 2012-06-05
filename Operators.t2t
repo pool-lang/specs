@@ -22,6 +22,6 @@ Operators
 | < <= > >=         | Relational operators.                    |               |
 | == !=             | For relational = and ≠ respectively      |               |
 | && ~|~|           | Logical operators.                       |               |
+| ,                 | Tuple separator Left-to-right            |               |
 | =                 | Direct assignment                        |               |
 | += −= *= /= %= <<= >>= &= ^= ~|= | Assignment by sum and difference |        |
-| ,                 | Tuple separator Left-to-right            |               |
