@@ -51,7 +51,7 @@ can skip the parameter list if it takes no arguments.
 ```
 	set.filter((i){ i % 2 == 0 });
 
-	immutable pivot = 8;
+	var pivot = 8;
 	set.filter((i){ i > pivot });
 ```
 

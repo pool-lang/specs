@@ -22,7 +22,7 @@ This allows the following code:
 
 	int main ( String[] arg )
 	{
-		mutable jars = new containers::jar::Jar();
+		var jars = new containers::jar::Jar();
 
 		jars.insert(new languages::vitrualmachine::java::files::jar::Jar(arg[1]));
 	}
@@ -41,7 +41,7 @@ becomes:
 
 	int main ( String[] arg )
 	{
-		mutable jars = new GJar();
+		var jars = new GJar();
 
 		jars.insert(new JJar(arg[1]));
 	}
@@ -66,19 +66,19 @@ Aliases are only valid in the scope in which they are declared and only below
 where they exist in the source file.
 
 ```
-	mutable score :Score = 1_000_000; // ERROR: Score is undefined.
+	var score :Score = 1_000_000; // ERROR: Score is undefined.
 
 	alias uint as Score;
 
-	mutable score :Score = 1_000_000; // Good.
+	var score :Score = 1_000_000; // Good.
 
 	{
 		alias uint32 as Timeval;
 
-		immutable t :Timeval = 779573880;
+		var t :Timeval = 779573880;
 	}
 
-	mutable curTime :Timeval = 779573880; // ERROR: Timeval undefined.
+	var curTime :Timeval = 779573880; // ERROR: Timeval undefined.
 ```
 
 This is a recommended way of using aliases as shortcuts as the definition is

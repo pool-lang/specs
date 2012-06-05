@@ -1,13 +1,14 @@
 Statements
 
-%!include config.t2t
+
+%!includeconf: config.t2t
 
 == Overview ==
 A statement does something.  Statements are terminated by a semi-colon and and
 empty statement is valid.  Here are some examples of statements.
 
 ```
-	mutable i = 10;                 // This is a statement.
+	var i = 10;                     // This is a statement.
 	i = 4;                          // This too.
 	;                               // Also a statement.
 	; i++; ; sout.writeln("Hello"); // Four statements.
@@ -25,7 +26,7 @@ called blocks.  Blocks consist of any number of statements inside of braces.
 
 ```
 	{ // This is one statement.
-		mutable i;   // It does the statements inside of it.
+		var i;   // It does the statements inside of it.
 		i = 5;
 		i += 10; // And returns the value of the last statement inside of it.
 	}
@@ -34,9 +35,9 @@ called blocks.  Blocks consist of any number of statements inside of braces.
 They are very useful for if statements.
 
 ```
-	// mutable i:int
+	// var i:int
 
-	mutable bt3;
+	var bt3;
 	if ( i > 3 )
 	{
 		stdout.writeln("i is bigger than three!");
@@ -55,19 +56,20 @@ it is being sent to.
 
 ```
 	mutable s = {
-		mutable h = "1234567890"
+		var h = "1234567890"
 		h = sha256(s);
 		h = rot13(s);
 	} // Now r is the rot13 of a hash.
 
 	mutable i = {
-		mutable g = RandomGenerator(time.unix());
+		var g = RandomGenerator(time.unix());
 		while ( g.next % 1_000_000 != 0 )
 			;
 		g.cur;
 	} // r is now a number that is a multiple of a million.
 
-	// value:int
+	// var value:int
+
 	mutable i:real = {
 		if ( value < 0 )
 		{
@@ -77,7 +79,7 @@ it is being sent to.
 		else                    100 / value; // Returns int, can be cast to real.
 	}
 
-	mutable v = {
+	var v = {
 		if    (interger) 5;
 		else if (string) "five";
 		else if  (float) 5.0;

@@ -72,7 +72,7 @@ the types.
 
 	int main ( String[] arg )
 	{
-		mutable jars = new containers::jar::Jar();
+		var jars = new containers::jar::Jar();
 
 		jars.insert(new languages::vitrualmachine::java::files::jar::Jar(arg[1]));
 	}
@@ -91,7 +91,7 @@ rename on import feature.
 
 	int main ( String[] arg )
 	{
-		mutable jars = new containers::jar::Jar();
+		var jars = new containers::jar::Jar();
 
 		jars.insert(new jjar::Jar(arg[1]));
 	}
