@@ -11,14 +11,16 @@ is a block bound to a name.
 == Declaration ==
 
 ```
-	(uint16, uint16) split ( i:uint32 )
-	[[
+	[[ (uint16, uint16) split ( i:uint32 );
 		return ( i >> 16, i & 0xFFFF );
 	]]
 
 	// inside a function only
-	var makeBigger = (real v)[[ v + 1.43 ]]; // return type is inferred to be real.
+	var makeBigger = [[(real v); v + 1.43 ]]; // return type is inferred to be real.
 ```
+
+The first statement inside the function is the information statement it describes
+the function.  This statement and parts of it are optional as described below.
 
 To the left side of the function name is the return tuple.  The name can begin
 with any alphabetic character or an underscore and contain any alphanumeric
@@ -49,16 +51,15 @@ The rules for defining blocks are nearly identical to functions except you use
 can skip the parameter list if it takes no arguments.
 
 ```
-	set.filter((i){ i % 2 == 0 });
+	set.filter({(i); i % 2 == 0 });
 
 	var pivot = 8;
-	set.filter((i){ i > pivot });
+	set.filter({(i); i > pivot });
 ```
 
 === Default Arguments ===
 ```
-	(a:Collection) collectionMin ( a:Collection, min :int = 10 )
-	[[
+	[[ (a:Collection) collectionMin ( a:Collection, min :int = 10 );
 		a.map((i:int){ i > min ? i : min });
 	]]
 ```
@@ -71,8 +72,7 @@ any previous arguments.
 
 === Named return values ===
 ```
-	(r:String) createString ( in:Collection!String )
-	{
+	{ (r:String) createString ( in:Collection!String );
 		r = ""
 
 		in.foreach((s:String)[[
@@ -91,16 +91,17 @@ initialized with the value passed in.
 
 === Macros ===
 
-Pool does not have explicit macros but you can use blocks or functions as macros.
+Pool does not have explicit macros but you can use local blocks or functions as
+macros.
 ```
-	unittest
-	{
-		bool isCloseF(f1:real, f2:real, tol:real = 0.001)
-		[[
+	{ @unittest;
+
+		[[ (bool) isCloseF(f1:real, f2:real, tol:real = 0.001);
+
 			return f1+tol > f2 && f1-tol < f2;
 		]]
-		bool isCloseB(f1:real, f2:real, tol:real = 0.001)
-		{
+		{ (bool) isCloseB(f1:real, f2:real, tol:real = 0.001);
+
 			f1+tol > f2 && f1-tol < f2;
 		}
 
@@ -121,44 +122,20 @@ function followed by a tuple of arguments.
 
 === Syntax Sugar ===
 
-==== Bracket Drop Function Call Syntax ====
-
-The brackets may be omitted in function calls.  In this case it will be assumed
-that the brackets would be placed right after the function name and at the end
-of the statement.
-```
-	f1 1, f2 2, 3, 4, 5 f3 6;
-	// Is equivalent to
-	f1(1, f2(2, 3, 4, 5 f3(6)));
-```
-
-As it is clear to see this can quickly get confusing so it is recommended to use
-discretion and whitespace when considering this syntactic sugar.
-```
-	assert sin(0) == 0;
-
-	thing.enable true;
-```
-
-It is important to note that you must have brackets on a function that takes no
-arguments.
-
 ==== Block Outside Function Call Syntax ====
 
 If the last argument of a function is a block or anonymous function you may
-put it outside of the brackets and the semi-colon can be omitted.  Also single
-statement blocks may be written without the braces.
+put it outside of the brackets and the semi-colon can be omitted.
 
 ```
-	() f ( i :int, f :(int)(int){} )
-	[[
+	[[ () f ( i :int, f :(int)(int){} );
 		// ...
 	]]
 
-	f(5, (i){ i*2 });
+	f(5, {(i); i*2 });
 	// can be written as:
 	f(5)
-		(i){ i*2 }
+		{(i); i*2 }
 
 	// This is really nice when the block takes no arguments.
 	if (true, {i++});
@@ -167,4 +144,34 @@ statement blocks may be written without the braces.
 	// or:
 	if (true) i++;
 ```
+
+== Getter and Setter Functions ==
+
+Modern programming practices frown upon public variables.  This creates many
+functions such as ``getValue()`` and ``setValue()``.  This causes a lack of
+member variables and a waste of beautiful syntax.  Pool allows you to write
+setters and getters and they can act just like regular variables.  This adds
+meaning and elegance to code.  These are compatiable with regular assignment so
+you can start of with public variables and switch them to getters and setters
+when you need them and code that uses them will only need a recompile.
+
+```
+// If you have this:
+public var randomNumber = 4; // chosen by fair dice role.
+                             // guaranteed to be random.
+
+// And you later decide you want an actually random number you can change it
+// to this:
+var source = RandomGenerator(4);
+public {@property (int) randomNumber ();  return source.get() }
+// No setter -- How can you set a random number?
+```
+
+The syntax for a getter is the ``@property`` tag, followed by the function
+definition.  If it does not take any arguments it can be called as a getter.
+
+The syntax for a setter is the ``@property`` tag, followed by the function
+definition.  It must take arguments.  If there are no values in the return tuple
+then the assignment can't be used as a right-hand value.
+
 

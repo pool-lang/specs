@@ -30,24 +30,20 @@ Directory Layout:
 ```
 
 ```
-	// main.pool
-
 	import extra;     // Imports extra.pool.
 	import lib::core; // Imports lib/core.pool.
 
-	import pool::std; // Not found relative to the current file.  Therefore
+	import pool::io;  // Not found relative to the current file.  Therefore
 	                  // it will be looked for in the include paths,
 	                  // finding the standard library.
 ```
 
-== Renaming on import ==
+== Aliasing on import ==
 It is common to have namespace clashes when importing a lot of modules.  To
 combat this Pool allows you to change the name of a module on import.  Consider
 the following example.
 
 ```
-	// main.pool
-
 	import containers::jar;
 	import languages::vitrualmachine::java::files::jar;
 
@@ -65,8 +61,6 @@ To make it make sense to you (and the compiler) you need to fully qualify the
 the types.
 
 ```
-	// main.pool
-
 	import containers::jar;
 	import languages::vitrualmachine::java::files::jar;
 
@@ -84,8 +78,6 @@ rename on import feature.
 
 
 ```
-	// main.pool
-
 	import containers::jar;
 	import languages::vitrualmachine::java::files::jar as jjar;
 
@@ -102,3 +94,35 @@ But why can't we alias ``languages::vitrualmachine::java::files::jar::Jar`` to
 JJar and be done with it.  Well, you can, but that is done via an alias, giving
 one type a new name.  The module renaming is powerful because now all of the
 functions for dealing with ``.jar`` files are available under a short name.
+
+It is important to note that this is identical to the following.
+```
+	// main.pool
+
+	import containers::jar;
+	import languages::vitrualmachine::java::files::jar as jjar;
+
+	int main ( String[] arg )
+	{
+		var jars = new containers::jar::Jar();
+
+		jars.insert(new jjar::Jar(arg[1]));
+	}
+```
+
+== Scoped Imports ==
+Values imported can only be accessed below the import statement in and in the
+scope at which the import exists.
+```
+var jar1 = new Jar; // Error: Jar undefined.
+
+if (true)
+{
+	import containers::jar;
+	var jar2 = new Jar; // Good: Jar undefined.
+}
+
+var jar3 = new Jar; // Error: Jar out of scope.
+```
+
+

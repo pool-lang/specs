@@ -1,0 +1,19 @@
+Interfaces
+
+
+%!includeconf: config.t2t
+
+== Overview ==
+Interfaces are a key concept of Pool.  Intrfaces allow you to write functions
+that work with many representations of data as long as they share the required
+set of characteristics.  A simple example of this is below.
+
+```
+sum { (total: int)( array :Array!int );
+	total = 0;
+
+	array.foreach { (i :int)
+			total += int;
+	}
+}
+```

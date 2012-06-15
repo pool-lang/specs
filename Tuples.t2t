@@ -1,0 +1,35 @@
+Tuples
+
+
+%!includeconf: config.t2t
+
+== Introduction ==
+
+Tuples are a core part of the language syntax as they are used for argument
+passing and returning.  Tuples are temporary grouping of elements.  Tuples can't
+be stored they can only be packed or unpacked.  The syntax for a tuple is a set
+of values seperated by comas.  Paranthises can be used to control where tuples
+begin and end.  It is often benificial to surround the tuple with paranthies
+even if not nessary to promote clarity.
+```
+1, 2, 3;       // A tuple.
+1, "one", 1.0; // Tuples can contain any types.
+(1, 2, 3, 4,); // A trailing comma is allowed.
+```
+== Unpacking ==
+The assignment operator (``=``) is used for unpacking tuples.  It unpacks the
+values from the left tuple into the variables in the right tuple.  The right
+side is evaluated before the left side.
+
+```
+var a, b, c, d;
+
+a, b = 3, 4;
+assert( a == 3 && b = 4 );
+
+c, d = a, b;
+assert( c == 3 && d = 4 );
+
+a, b = b, a; // Flip the values.
+assert( a == 4 && b = 3 );
+```

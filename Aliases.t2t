@@ -8,7 +8,7 @@ An alias is used to give a symbol a new name.  The two names can be used
 interchangeably and will behave identically.  An example of an alias is below.
 
 ```
-	alias languages::vitrualmachine::java::files::jar::Jar as JJar;
+	alias languages::vitrualmachine::java::files::jar::Jar JJar;
 ```
 
 Now you may use JJar in place of languages::vitrualmachine::java::files::jar.
@@ -20,8 +20,7 @@ This allows the following code:
 	import containers::jar;
 	import languages::vitrualmachine::java::files::jar;
 
-	int main ( String[] arg )
-	{
+	{ int main ( String[] arg );
 		var jars = new containers::jar::Jar();
 
 		jars.insert(new languages::vitrualmachine::java::files::jar::Jar(arg[1]));
@@ -36,11 +35,10 @@ becomes:
 	import containers::jar;
 	import languages::vitrualmachine::java::files::jar;
 
-	alias containers::jar::Jar as GJar;
-	alias languages::vitrualmachine::java::files::jar::Jar as JJar;
+	alias containers::jar::Jar GJar;
+	alias languages::vitrualmachine::java::files::jar::Jar JJar;
 
-	int main ( String[] arg )
-	{
+	{ int main ( String[] arg );
 		var jars = new GJar();
 
 		jars.insert(new JJar(arg[1]));
@@ -49,13 +47,29 @@ becomes:
 
 Allowing you to use both your glass jars and ``.jar``s with ease.
 
+It is usefull to give meaningful names to types.
+```
+	{ (int32, uint) getDateFromServer ( uint64, uint64 ); /+ code +/ }
+
+	// Pretty meaningless based on it's type signature.
+
+	alias int32  TimeStamp;
+	alias uint   ResponseCode;
+	alias uint64 PostId;
+	alias uint64 AuthToken;
+
+	// Now the definition is more meaningful.
+
+	{ (TimeStamp, ResponseCode) getDateFromServer ( AuthToken, PostId ); /+ code +/ }
+```
+
 == Disambiguating Aliases ==
 Sometimes, like in the previous examples you get two symbols with the same name
 from two different modules.  If you want to use one without having to fully
 qualify paths you can alias the symbol over itself.
 
 ```
-	alias containers::jar::Jar as Jar;
+	alias containers::jar::Jar Jar;
 ```
 
 Now, any reference to ``Jar`` will refer to ``containers::jar::Jar`` without
@@ -68,12 +82,12 @@ where they exist in the source file.
 ```
 	var score :Score = 1_000_000; // ERROR: Score is undefined.
 
-	alias uint as Score;
+	alias uint Score;
 
 	var score :Score = 1_000_000; // Good.
 
 	{
-		alias uint32 as Timeval;
+		alias uint32 Timeval;
 
 		var t :Timeval = 779573880;
 	}
@@ -82,4 +96,4 @@ where they exist in the source file.
 ```
 
 This is a recommended way of using aliases as shortcuts as the definition is
-close to the use.  This prevents confusion when unreadable names are used.
+close to the useage.  This prevents confusion when unreadable names are used.
