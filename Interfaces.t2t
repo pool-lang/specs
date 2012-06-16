@@ -17,3 +17,87 @@ sum { (total: int)( array :Array!int );
 	}
 }
 ```
+
+This adds up all of the intergers in the array and returns the result.  But what
+if I have a ``List``? or a ``Tree``?  The simple solution is interfaces.
+
+```
+sum { (total: int)( items :Set!int );
+	total = 0;
+
+	items.foreach { (i :int)
+			total += int;
+	}
+}
+```
+
+Now you can pass in anything that is a set.  Anything that has some elements and
+can return them in order.
+
+== Using Interfaces ==
+Variable declarations in Pool are based on interfaces.  They are the ``var``
+keyword followed by the variable name then interface specifiers.  Examples are
+below.
+```
+var a; // Any type, defaults to Object.
+var b :Set!int; // Will take any set of ints.
+var c :Map!int :List!int; // Will take any map of ints that is also ordered.
+```
+
+== Declaring Interfaces ==
+The declaration of interfaces is simple.  It is the ``iface`` keyword followed
+by braces and the things inside the interface.
+
+```
+iface { IntGenerator;
+	(int) get ();
+}
+```
+
+Notice that there is no need to mark all of the elements public, everything in
+an interface is public by default.
+
+You can then use the interface like so:
+```
+[[ ( total :int ) sum5 ( gen :IntGenerator );
+	Array::range(0,4).foreach{
+			total += gen.get();
+	}
+]]
+```
+
+Now anyone can sum the first 5 nubmers from any generator sequence.
+
+== Implementing Interfaces ==
+
+The details are covered in the [[Classes]] section but we will skim over it
+here.  The syntax is derived from declaring variables.  You basicly say that
+the class implements the interface with ``:``.
+```
+	class { Fibonacci :IntGenerator;
+		var prev1 = 0;
+		var prev2 = 0;
+
+		[[ (int) get ();
+			if ( prev2 = 0 ) // For first few.
+			{
+				prev2 = prev1;
+				prev1 = 1;
+			}
+			else
+			{
+				prev1, prev2 = prev1+prev2, prev1;
+				return prev1;
+			}
+		]]
+	}
+```
+
+== Summary ==
+Pool is completly interface centric and while the examples are very bad examples
+of interfaces (or at least the name should be better) interfaces allow you to
+write reusable library code and the user doesn't have to worry about the type
+being passed in.  This also allows you to switch datatypes without having to
+refactor your program, making optimization much easier.  If you use specialized
+types in all of your functions you will run into issues later on.  Only use
+the types required and your functions will be more useful.

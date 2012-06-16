@@ -1,0 +1,32 @@
+Modules
+
+
+%!includeconf: config.t2t
+
+== Introduction ==
+
+In Pool all code is organized into a series of modules.  This allows to keep
+code organized (there is nothing like scrolling through a 20 000 line file
+trying to find out where you defined ``foo()``).  Pool has a strict module
+system to ensure that people can find what they want even if they didn't right
+it.  This also allows automated builds with minimal buildscripts and powerful
+tools that work out-of-the-box.
+
+== Files ==
+
+Every file is a module.  The file must have a ``module`` statement that matches
+it's location on the filesystem.  For example if there was a statement
+``module foo::bar`` it should be in a file named ``bar.pool`` inside of a
+directory called ``foo``.
+
+== Visibility ==
+
+Visibility is a very important aspect of clean code.  You need to let people
+know what they should be calling and what is an implementation detail.  In Pool
+everything is private by default.  This is to ensure that you don't expose too
+much.  To make something private simpaly prefix a statement that creates a new
+name with ``public`` and it will be exported to any module that ``import``s
+the current one.
+
+Visibility is handled at the module level.  This means that anything inside of a
+module can see anything else inside of it.

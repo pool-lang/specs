@@ -1,0 +1,45 @@
+Classes
+
+
+%!includeconf: config.t2t
+
+== Introduction ==
+
+Classes are the concrete types of Pool.  Even though most of the focus is on
+interfaces if you acutally want to do somthing you eventually need a class.
+Classes are passed arround by value.
+
+== Declaring Classes ==
+Classes are declared using the ``class`` keyword.
+```
+class { Foo;
+	[[ (int) double (i :int);
+		i * 2;
+	]]
+}
+```
+
+== Inheritance and Interfaces ==
+To inherit from another class or implement an interface just put the name after
+a colon after the class name.
+
+```
+class { A;
+	[[ foo (); return 1 ]]
+}
+class { B :A;
+	[[ bar (); return 2 ]]
+}
+
+[[ (int) main (Array!int);
+	var b = new B();
+
+	out.write(b.foo()); // Prints "1".
+]]
+
+It is exactly the same for interfaces except of course you have too define the
+function.
+
+== Visibility ==
+
+Visibility is the same a module visibility and is explained in [[Visibility]].

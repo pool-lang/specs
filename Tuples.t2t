@@ -16,10 +16,12 @@ even if not nessary to promote clarity.
 1, "one", 1.0; // Tuples can contain any types.
 (1, 2, 3, 4,); // A trailing comma is allowed.
 ```
+
 == Unpacking ==
 The assignment operator (``=``) is used for unpacking tuples.  It unpacks the
 values from the left tuple into the variables in the right tuple.  The right
-side is evaluated before the left side.
+side is evaluated before the left side.  If a value is to be discarded just
+don't put a variable name.  All extra values on the right side are ignored.
 
 ```
 var a, b, c, d;
@@ -32,4 +34,15 @@ assert( c == 3 && d = 4 );
 
 a, b = b, a; // Flip the values.
 assert( a == 4 && b = 3 );
+
+,,a = 1,2,3,4;
+assert( a == 3 );
+```
+
+== Tuple Nesting ==
+Because tuples can not be stored there is no use of a tuple inside of a tuple.
+Pool simply drops all elemets other than the first.  This is because commonly
+you just want the first return value.
+```
+assert (0,1,2,3,4) == ((0),1,2,(3,(-1,-1,-1),(-1,-1)),(((4),-1, -1), -1));
 ```

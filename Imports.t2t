@@ -47,8 +47,8 @@ the following example.
 	import containers::jar;
 	import languages::vitrualmachine::java::files::jar;
 
-	int main ( String[] arg )
-	{
+	{ (int) main ( arg :Array!String );
+
 		mutable jars = new Jar();
 
 		jars.insert(new Jar(arg[1]));
@@ -64,8 +64,8 @@ the types.
 	import containers::jar;
 	import languages::vitrualmachine::java::files::jar;
 
-	int main ( String[] arg )
-	{
+	{ (int) main ( arg :Array!String );
+
 		var jars = new containers::jar::Jar();
 
 		jars.insert(new languages::vitrualmachine::java::files::jar::Jar(arg[1]));
@@ -81,8 +81,8 @@ rename on import feature.
 	import containers::jar;
 	import languages::vitrualmachine::java::files::jar as jjar;
 
-	int main ( String[] arg )
-	{
+	{ (int) main ( arg :Array!String );
+
 		var jars = new containers::jar::Jar();
 
 		jars.insert(new jjar::Jar(arg[1]));
@@ -102,8 +102,8 @@ It is important to note that this is identical to the following.
 	import containers::jar;
 	import languages::vitrualmachine::java::files::jar as jjar;
 
-	int main ( String[] arg )
-	{
+	{ (int) main ( arg :Array!String );
+
 		var jars = new containers::jar::Jar();
 
 		jars.insert(new jjar::Jar(arg[1]));
