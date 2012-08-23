@@ -1,0 +1,79 @@
+Primitive Types
+
+
+%!includeconf: config.t2t
+
+== Overview ==
+
+Pool provides a wide varity of built-in types that provide consistant semantics
+and types that enable speed on the platform in which the code is running on.
+
+== Intergers ==
+
+These types provide basic interger storage and all implement ``Interger``.  They
+also support the following properties.  Please note that these are properties
+of the types themselves, not the actual objects. (ex: int::max **not** i.max)
+A type of "same" means the same type as it is a propery of.
+
+|| Property || Type || Description                                                   ||
+| size      | int   | The number of bits used to represent the type.                  |
+| min       | same  | The minimum value the type can represent.                       |
+| max       | same  | The maximum value the type can represent.                       |
+| native    | bool  | If the processor has native support for intergers of this size. |
+
+=== Machine Word Sized ===
+
+These types depend on the machine on which the code is to run.
+
+|| Type     || Signededness || Description                                                     ||
+| int       | signed    | Machine-word sized.  This type should give good performance.          |
+| uint      | unsigned  | Machine-word sized, unsigned. This type should give good performance. |
+| size_t    | signed    | A size that can describe the bytes of memory available.               |
+| ptrdiff_t | unsigned  | This type can describe the difference between any two pointers.       |
+
+=== Fixed Size ===
+
+These types provide fixed semantics across machines.  This consistancy can often
+affect performance.
+
+|| Type || Size          ||
+| i8    | 8-bit signed    |
+| u8    | 8-bit unsigned  |
+| i16   | 16-bit signed   |
+| u16   | 16-bit unsigned |
+| i32   | 32-bit signed   |
+| u32   | 32-bit unsigned |
+| i64   | 64-bit signed   |
+| u64   | 64-bit unsigned |
+
+=== Limited Sizes ===
+
+These types are a comprimise when you want all the performace you can get but
+require a certian size.  These types are ideal if you know the minimum size
+required but want all of the performace you get.
+
+|| Type      || Size                   ||
+| ilesat8    | At least 8-bit signed    |
+| ulesat8    | At least 8-bit unsigned  |
+| ilesat16   | At least 16-bit signed   |
+| ulesat16   | At least 16-bit unsigned |
+| ilesat32   | At least 32-bit signed   |
+| ulesat32   | At least 32-bit unsigned |
+| ilesat64   | At least 64-bit signed   |
+| ulesat64   | At least 64-bit unsigned |
+
+== Real (Floating Point) ==
+
+These types are floating point numbers and implement ``Real``.  They
+also support the following properties.  Please note that these are properties
+of the types themselves, not the actual objects. (ex: float::inf **not** f.inf)
+A type of "same" means the same type as it is a propery of.
+
+|| Property || Type || Description                                                          ||
+| inf       | same  | Positive infinity.                                                     |
+| ninf      | same  | Negative infinity.                                                     |
+| min       | same  | The minimum numerical value the type can represent.                    |
+| max       | same  | The maximum numerical value the type can represent.                    |
+| native    | bool  | If there is some sort of fpu available to the processor for this type. |
+
+%@todo Look up IEEE standards for floating point types.
