@@ -30,3 +30,25 @@ the current one.
 
 Visibility is handled at the module level.  This means that anything inside of a
 module can see anything else inside of it.
+
+```
+	var i = 10;        // Private
+	public var j = 20; // Public
+
+	public class { Foo;
+		var _value = 5; // Private variable.
+
+		public {property (int) value (); return _value };   // Public setter.
+		{property (int) value (v:int); return _value = v }; // Private getter.
+
+		public {()double(); value *= 2 } // Public.
+	}
+
+	public { ()triple(Foo *f); f.value *= 3; } // Legal, same module.
+```
+
+=== Inheritance and Visibility ===
+
+There is a third form of visibility for classes, `protected`.  If a class member
+is marked as ``protected` as opposed to	`public` only classes which derive from
+it can access that information.

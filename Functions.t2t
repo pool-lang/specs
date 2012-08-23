@@ -163,15 +163,33 @@ public var randomNumber = 4; // chosen by fair dice role.
 // And you later decide you want an actually random number you can change it
 // to this:
 var source = RandomGenerator(4);
-public {@property (int) randomNumber ();  return source.get() }
+public {property (int) randomNumber ();  return source.get() }
 // No setter -- How can you set a random number?
 ```
 
-The syntax for a getter is the ``@property`` tag, followed by the function
+The syntax for a getter is the ``property`` keyword, followed by the function
 definition.  If it does not take any arguments it can be called as a getter.
 
 The syntax for a setter is the ``@property`` tag, followed by the function
 definition.  It must take arguments.  If there are no values in the return tuple
 then the assignment can't be used as a right-hand value.
 
+```
+	var r = randomNumber;
+	randomNumber = 3; // Error: setter not defined.
+```
+
+Although this example is not the best useage of property functions it clearly
+illistrates many benifits.  When writing property functions it is recommended
+that you follow the below guidelines so that your code makes sense to a new
+reader.
+
+ - Calling the getter multiple times should yield the same result and keep the
+	object that it was called on semanticaly the same.
+ - The setter should return the value passed to it.
+ - Many people will expect that getters are not expensive.  It is often a good
+	idea to cache the values so that repeated calls are cheep.
+
+In general try to use property functions when the function acts like a regular
+variable.
 
