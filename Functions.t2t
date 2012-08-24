@@ -11,7 +11,7 @@ is a block bound to a name.
 == Declaration ==
 
 ```
-	[[ (uint16, uint16) split ( i:uint32 );
+	[[ (uint16, uint16) split ( i:uint32 ):
 		return ( i >> 16, i & 0xFFFF );
 	]]
 
@@ -19,8 +19,8 @@ is a block bound to a name.
 	var makeBigger = [[(real v); v + 1.43 ]]; // return type is inferred to be real.
 ```
 
-The first statement inside the function is the information statement it describes
-the function.  This statement and parts of it are optional as described below.
+The first thing inside the delimiter is the function signature.  It is optinal and
+ends with a colon.  The colon is not nessary if it is omitted.
 
 To the left side of the function name is the return tuple.  The name can begin
 with any alphabetic character or an underscore and contain any alphanumeric
@@ -42,25 +42,24 @@ will return the values passed to it.
 Blocks are similar to functions, the main difference is that blocks  have the
 added advantage of having access to the scope of the enclosing function.  Also
 you cannot return from a block.  Return statements inside blocks will return
-from the enclosing function. Blocks cannot be bound to a name access able outside
+from the enclosing function. Blocks cannot be bound to a name accessable outside
 of the function they are declared in.  Therefore if ``filter`` in the following
 example attempts to store the delegate passed to it, this will fail to compile.
 
 The rules for defining blocks are nearly identical to functions except you use
-``{`` and ``}`` instead of ``[[`` and ``]]``.  Also, for anonymous blocks you
-can skip the parameter list if it takes no arguments.
+``{`` and ``}`` instead of ``[[`` and ``]]``.
 
 ```
-	set.filter({(i); i % 2 == 0 });
+	set.filter({(i): i % 2 == 0 });
 
 	var pivot = 8;
-	set.filter({(i); i > pivot });
+	set.filter({(i): i > pivot });
 ```
 
 === Default Arguments ===
 ```
-	[[ (a:Collection) collectionMin ( a:Collection, min :int = 10 );
-		a.map((i:int){ i > min ? i : min });
+	[[ (a:Collection) collectionMin ( a:Collection, min :int = 10 ):
+		a.map({(i:int): i > min ? i : min });
 	]]
 ```
 
@@ -72,10 +71,10 @@ any previous arguments.
 
 === Named return values ===
 ```
-	{ (r:String) createString ( in:Collection!String );
+	{ (r:String) createString ( in:Collection!String ):
 		r = ""
 
-		in.foreach((s:String)[[
+		in.foreach([[(s:String);
 			r += s;
 		]])
 	}
@@ -94,14 +93,12 @@ initialized with the value passed in.
 Pool does not have explicit macros but you can use local blocks or functions as
 macros.
 ```
-	{ @unittest;
+	{ @unittest:
 
-		[[ (bool) isCloseF(f1:real, f2:real, tol:real = 0.001);
-
+		[[ (bool) isCloseF(f1:real, f2:real, tol:real = 0.001):
 			return f1+tol > f2 && f1-tol < f2;
 		]]
-		{ (bool) isCloseB(f1:real, f2:real, tol:real = 0.001);
-
+		{ (bool) isCloseB(f1:real, f2:real, tol:real = 0.001):
 			f1+tol > f2 && f1-tol < f2;
 		}
 
@@ -128,21 +125,19 @@ If the last argument of a function is a block or anonymous function you may
 put it outside of the brackets and the semi-colon can be omitted.
 
 ```
-	[[ () f ( i :int, f :(int)(int){} );
+	[[ () f ( i :int, f :{(int)(int)} );
 		// ...
 	]]
 
-	f(5, {(i); i*2 });
+	f(5, {(i): i*2 });
 	// can be written as:
 	f(5)
-		{(i); i*2 }
+		{(i): i*2 }
 
 	// This is really nice when the block takes no arguments.
 	if (true, {i++});
 	// can be written as:
 	if (true) {i++}
-	// or:
-	if (true) i++;
 ```
 
 == Getter and Setter Functions ==
@@ -163,7 +158,7 @@ public var randomNumber = 4; // chosen by fair dice role.
 // And you later decide you want an actually random number you can change it
 // to this:
 var source = RandomGenerator(4);
-public {property (int) randomNumber ();  return source.get() }
+@property @public [[randomNumber: source.get() ]]
 // No setter -- How can you set a random number?
 ```
 
