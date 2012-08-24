@@ -162,7 +162,7 @@ var source = RandomGenerator(4);
 // No setter -- How can you set a random number?
 ```
 
-The syntax for a getter is the ``property`` keyword, followed by the function
+The syntax for a getter is the ``@property`` tag, followed by the function
 definition.  If it does not take any arguments it can be called as a getter.
 
 The syntax for a setter is the ``@property`` tag, followed by the function
