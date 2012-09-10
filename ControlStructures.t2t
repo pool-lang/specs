@@ -13,15 +13,15 @@ returned.
 
 ```
 	var cond = false;
-	if (cond, sout.writeln("Not printed."));
+	if cond, sout.writeln("Not printed.");
 
 	cond = true;
-	if (cond, sout.writeln("Printed."));
+	if cond, sout.writeln("Printed.");
 
-	if (cond, sout.writeln("Printed."), sout.writeln("Not printed."));
+	if cond, sout.writeln("Printed."), sout.writeln("Not printed.");
 
 	cond = false;
-	if (cond, sout.writeln("Not printed."), sout.writeln("Printed."));
+	if cond, sout.writeln("Not printed."), sout.writeln("Printed.");
 ```
 
 === Syntactic Sugar ===
@@ -33,10 +33,10 @@ using the else keyword.
 ```
 	var cond = true;
 
-	if (cond) sout.writeln("Printed");
+	if cond, { sout.writeln("Printed") };
 
-	if (cond) sout.writeln("Printed");      // Now that's what you were looking
-	else      sout.writeln("Not printed."); // for.
+	if cond, { sout.writeln("Printed") },
+	         { sout.writeln("Not printed.") };
 ```
 
 === else if ===
@@ -46,12 +46,12 @@ statements.
 ```
 	var cond = 7;
 
-	if      ( cond == 1 ) sout.writeln("1");
-	else if ( cond == 2 ) sout.writeln("2");
-	else if ( cond == 3 ) sout.writeln("3");
-	else if ( cond == 4 ) sout.writeln("4");
-	else if ( cond == 5 ) sout.writeln("5");
-	else                  sout.writeln("I give up, it's big.");
+	if ( cond == 1 ) { sout.writeln("1") },
+	if ( cond == 2 ) { sout.writeln("2") },
+	if ( cond == 3 ) { sout.writeln("3") },
+	if ( cond == 4 ) { sout.writeln("4") },
+	if ( cond == 5 ) { sout.writeln("5") },
+	                 { sout.writeln("I give up, it's big.") };
 ```
 
 == while ==
@@ -67,8 +67,8 @@ The while statement performs the following steps.
 ```
 	var tries:uint = 0;
 
-	while ( 2^^tries < 1_000_000 )
-		tries++;
+	while { 2^^tries < 1_000_000 },
+		{ tries++ };
 
 	sout.write("You need ").write(tries, " bytes to store 1 000 000.");
 ```
@@ -104,10 +104,15 @@ be called on continue.
 
 	{
 		{init};
+		var first = true;
 		while ({cond})
 		{
+			if first,
+			{
+				{inc};
+				first = false;
+			};
 			{code};
-			{inc};
 		}
 	}
 ```

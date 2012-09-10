@@ -117,29 +117,6 @@ macros.
 Function calls are similar to most C-style languages.  It is the name of the
 function followed by a tuple of arguments.
 
-=== Syntax Sugar ===
-
-==== Block Outside Function Call Syntax ====
-
-If the last argument of a function is a block or anonymous function you may
-put it outside of the brackets and the semi-colon can be omitted.
-
-```
-	[[ () f ( i :int, f :{(int)(int)} );
-		// ...
-	]]
-
-	f(5, {(i): i*2 });
-	// can be written as:
-	f(5)
-		{(i): i*2 }
-
-	// This is really nice when the block takes no arguments.
-	if (true, {i++});
-	// can be written as:
-	if (true) {i++}
-```
-
 == Getter and Setter Functions ==
 
 Modern programming practices frown upon public variables.  This creates many
