@@ -84,16 +84,16 @@ to be translated into a while loop it would look like.  Except ``{inc}`` will
 be called on continue.
 
 ```
-	for ( /*{init}*/ , /*{cond}*/, /*{inc}*/, /*{code}*/ )
+	for ( /*init*/ , /*cond*/, /*inc*/, /*code*/ )
 
 	// is equivalent to:
 
 	{
-		/*{init}*/;
-		while (/*{cond}*/)
+		/*init*/;
+		while /*cond*/,
 		{
-			/*{code}*/;
-			/*{code}*/;
-		}
+			/*code*/;
+			/*inc*/;
+		};
 	}
 ```
