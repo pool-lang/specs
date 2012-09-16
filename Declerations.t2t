@@ -1,0 +1,11 @@
+Declerations
+
+
+%!includeconf: config.t2t
+
+== Introduction ==
+
+Pool has two types of decleration, variable and function declarations.
+
+== Types of Decleration ==
+=== Variable Declarations ===
