@@ -19,7 +19,7 @@ even if not nessary to promote clarity.
 
 == Unpacking ==
 The assignment operator (``=``) is used for unpacking tuples.  It unpacks the
-values from the left tuple into the variables in the right tuple.  The right
+values from the right tuple into the variables in the laft tuple.  The right
 side is evaluated before the left side.  If a value is to be discarded just
 don't put a variable name.  All extra values on the right side are ignored.
 
